@@ -86,7 +86,7 @@ class OrderServiceImplTest {
         assertThrows(IllegalArgumentException.class,
                 () -> orderService.updateStatus(order.getId(), "MEOW"));
 
-    verify(orderRepository, times(1)).save(any(Order.class));
+    verify(orderRepository, times(0)).save(any(Order.class));
     }
 
     @Test
@@ -96,7 +96,7 @@ class OrderServiceImplTest {
         assertThrows(NoSuchElementException.class,
                 () -> orderService.updateStatus("zczc", OrderStatus.SUCCESS.getValue()));
 
-        verify(orderRepository, times(1)).save(any(Order.class));
+        verify(orderRepository, times(0)).save(any(Order.class));
     }
 
     @Test
@@ -117,7 +117,7 @@ class OrderServiceImplTest {
     @Test
     void testFindAllByAuthorIfAuthorCorrect() {
         Order order = orders.get(1);
-        doReturn(order).when(orderRepository).findAllByAuthor(order.getAuthor());
+        doReturn(orders).when(orderRepository).findAllByAuthor(order.getAuthor());
 
         List<Order> results = orderService.findAllByAuthor(order.getAuthor());
         for (Order result : results) {
